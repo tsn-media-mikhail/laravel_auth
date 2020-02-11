@@ -1,3 +1,4 @@
+<? ?>
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -12,6 +13,8 @@
         <!-- Styles -->
         <style>
             html, body {
+                background-image: url("{{asset('images/main.jpg')}}");
+                background-size: 100% 100%;
                 background-color: #fff;
                 color: #636b6f;
                 font-family: 'Nunito', sans-serif;
@@ -66,16 +69,29 @@
     <body>
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
+
                 <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
+                    @if (Auth::check() && $user = Auth::user())
+
+
+                        @if ($user->isAdmin())
+                            <a href="/admin">Admin</a>
+                        @endif
+
+                        <a class="dropdown-item" href="{{ route('logout') }}"
+                           onclick="event.preventDefault();
+                            document.getElementById('logout-form').submit();">
+                            {{ __('Logout') }}
+                        </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+
                     @else
                         <a href="{{ route('login') }}">Login</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
+                        <a href="{{ route('register') }}">Register</a>
+                    @endif
                 </div>
             @endif
 
