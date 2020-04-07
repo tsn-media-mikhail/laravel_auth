@@ -116,10 +116,9 @@ class UserController extends Controller
         $user->email = $request['email'];
         $request['password'] == null ?: $user->password = bcrypt($request['password']);
 
-//        $user->roles()->attach(Role::where('id', $request['role'])->first());
+        $user->roles()->sync(Role::where('id', $request['role'])->first());
 
         $user->save();
-
 
         return redirect()->route('admin.user_managment.user.index');
     }
@@ -132,6 +131,8 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        $user->roles()->sync(Role::where('id', Role::ROLE_DISABLED)->first());
 
+        return redirect()->route('admin.user_managment.user.index');
     }
 }

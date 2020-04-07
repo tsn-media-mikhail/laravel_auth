@@ -4,8 +4,9 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
-class CheckStatus
+class CheckAdminStatus
 {
     /**
      * Handle an incoming request.
@@ -19,6 +20,7 @@ class CheckStatus
         if (Auth::user() && Auth::user()->isAdmin()) {
             return $next($request);
         } else {
+            Session::flash('message', 'You don\'t have permission to perform this action');
             return redirect('/');
         }
     }

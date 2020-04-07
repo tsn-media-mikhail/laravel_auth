@@ -10,16 +10,19 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::group(['middleware' => 'user_status'], function(){
 
-Route::get('/', function () {
-    return view('welcome');
+    Route::get('/', function () {
+        return view('welcome');
+    });
+
+    Auth::routes();
+
+    Route::get('/home', 'HomeController@index')->name('home');
+
 });
 
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['status', 'auth']], function () {
+Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['admin_status', 'auth']], function () {
 
    Route::get('/', 'DashboardController@dashboard')->name('admin.index');
 
