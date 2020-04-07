@@ -39,7 +39,7 @@ class User extends Authenticatable
     ];
 
     public function roles(){
-        return $this->belongsToMany(Role::class, 'user_roles');
+        return $this->belongsToMany(Role::class, 'user_roles','user_id', 'role_id');
     }
 
     public function isAdmin(){
@@ -53,6 +53,4 @@ class User extends Authenticatable
     public function isDisabled(){
         return $this->roles()->where(['name' => 'disabled'])->exists();
     }
-
-
 }

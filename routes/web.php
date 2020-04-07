@@ -18,3 +18,12 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['status', 'auth']], function () {
+
+   Route::get('/', 'DashboardController@dashboard')->name('admin.index');
+
+   Route::group(['prefix' => 'user_managment', 'namespace' => 'UserManagment'], function (){
+      Route::resource('/user', 'UserController', ['as' => 'admin.user_managment']);
+   });
+});
