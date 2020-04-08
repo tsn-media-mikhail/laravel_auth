@@ -76,6 +76,10 @@
     </nav>
 
     <main class="py-4">
+        @if (Session::has('message'))
+            <div class="alert {{ Session::get('alert-class', 'alert-info') }}" style="text-align: center">{{ Session::get('message') }}</div>
+        @endif
+
         @yield('content')
     </main>
 </div>

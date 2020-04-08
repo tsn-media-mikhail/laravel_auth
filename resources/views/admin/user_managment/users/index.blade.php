@@ -3,14 +3,27 @@
 @section('content')
 
     <div class="container">
-        <a href="{{route('admin.user_managment.user.create')}}" class="btn btn-primary pull-right"><i class="fa fa-plus-square-o"></i> Create User</a>
+        <a href="{{route('admin.user_managment.user.create')}}" class="btn btn-primary pull-right">
+            <i class="fa fa-plus-square-o"></i> Create User
+        </a>
 
-        <table class="table table-striped">
+        <table class="table table-striped" id="datatable">
             <thead>
-            <th>User Name</th>
-            <th>Email</th>
-            <th>Roles</th>
+            <th>User Name <i class="fa fa-sort-alpha-desc"></i></th>
+            <th>Email <i class="fa fa-sort-alpha-desc"></i></th>
+            <th>Roles <i class="fa fa-sort-alpha-desc"></i></th>
             <th class="text-right">Actions</th>
+            <tr>
+                <td>
+                    <input type="text" class="form-control filter-input" data-column="0">
+                </td>
+                <td>
+                    <input type="text" class="form-control filter-input" data-column="1">
+                </td>
+                <td>
+                    <input type="text" class="form-control filter-input" data-column="2">
+                </td>
+            </tr>
             </thead>
 
             <tbody>
@@ -55,5 +68,34 @@
             </tfoot>
         </table>
     </div>
-
 @endsection
+
+
+{{--don't know yet how to make it work, but i believe i will--}}
+
+
+
+{{--@section('page-js-script')--}}
+{{--    <script type="text/javascript">--}}
+{{--        $(document).ready(function () {--}}
+{{--            var table = $('#datatable').DataTable({--}}
+{{--                'processing' : true,--}}
+{{--                'serverSide' : true,--}}
+{{--                'ajax' : "{{route('admin.index')}}",--}}
+{{--                'columns' : [--}}
+{{--                    {'data' : 'name'},--}}
+{{--                    {'data' : 'email'},--}}
+{{--                    {'data' : 'role'}--}}
+{{--                ],--}}
+{{--            });--}}
+
+{{--            $('.filter-input').keyup(function () {--}}
+{{--                table.column($(this).data('column')).search($(this).val()).draw();--}}
+{{--            });--}}
+
+{{--            $('.filter-select').change(function () {--}}
+{{--                table.column($(this).data('column')).search($(this).val()).draw();--}}
+{{--            });--}}
+{{--        })--}}
+{{--    </script>--}}
+

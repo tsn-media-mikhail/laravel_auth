@@ -7,6 +7,8 @@ use App\Models\Role;
 use App\models\User;
 use App\Models\UserRole;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
 
 class UserController extends Controller
@@ -131,6 +133,12 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        if (Auth::user()->id == $user->id) {
+            Session::flash('message', 'You cant disable yourself');
+            Session::flash('alert-class', 'alert-danger');
+            return redirect()->back();
+        }
+
         $user->roles()->sync(Role::where('id', Role::ROLE_DISABLED)->first());
 
         return redirect()->route('admin.user_managment.user.index');
