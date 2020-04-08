@@ -1,5 +1,7 @@
 @extends('admin.layouts.admin_layout')
 
 @section('content')
-    <h1>Admin Panel</h1>
+    <div class="container">
+        <h1 style="text-align:  center">Admin Panel</h1>
+    </div>
 @endsection

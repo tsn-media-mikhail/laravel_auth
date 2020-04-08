@@ -18,7 +18,7 @@
     <label>Role</label>
     <select class="form-control" name="role">
         @foreach($roles as $role)
-            <option value="{{$role->id}}">{{$role->name}}</option>
+            <option @if($user->roles()->where(['name' =>  $role->name])->exists()){{'selected'}}@endif value="{{$role->id}}">{{$role->name}}</option>
         @endforeach
     </select>
 @endif

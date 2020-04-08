@@ -8,6 +8,7 @@ use App\models\User;
 use App\Models\UserRole;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
 
@@ -18,11 +19,19 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('admin.user_managment.users.index', [
-            'users' => User::with('roles')->paginate(10)
-        ]);
+        $users = User::getUsersByRequest($request);
+
+        if($request->ajax()){
+            return view('admin.user_managment.partials.user_table', [
+                'users' => $users
+            ]);
+        } else {
+            return view('admin.user_managment.users.index', [
+                'users' => $users
+            ]);
+        }
     }
 
     /**
